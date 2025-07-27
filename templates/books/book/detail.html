@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load youtube_extras %}
+{% load i18n %}
+{% block title %}{{ book.title }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div id="main-book-image-block" class="mb-2" style="width:320px; height:320px; display:flex; align-items:center; justify-content:center; background:#f8f9fa; border-radius:10px; overflow:hidden;">
+                {% if book.image %}
+                    <img id="main-book-image" src="{{ book.image.url }}" style="max-width:100%; max-height:100%; object-fit:contain;" alt="{{ book.title }}">
+                {% elif book.images.first %}
+                    <img id="main-book-image" src="{{ book.images.first.image.url }}" style="max-width:100%; max-height:100%; object-fit:contain;" alt="{{ book.title }}">
+                {% endif %}
+            </div>
+            <div class="d-flex flex-wrap gap-2 mb-3">
+            {% if book.image %}
+                    <img src="{{ book.image.url }}" class="img-thumbnail book-thumb" style="width:60px; height:60px; object-fit:cover; cursor:pointer; border-radius:6px;" onclick="setMainBookImage(this)">
+                {% endif %}
+                {% for img in book.images.all %}
+                    <img src="{{ img.image.url }}" class="img-thumbnail book-thumb" style="width:60px; height:60px; object-fit:cover; cursor:pointer; border-radius:6px;" onclick="setMainBookImage(this)">
+                {% endfor %}
+            </div>
+            {% if book.videos.all %}
+                <div class="mb-3">
+                    <h6>{% trans "Videolar" %}</h6>
+                    {% for vid in book.videos.all %}
+                        {% if vid.url %}
+                            <div class="ratio ratio-16x9 mb-2">
+                                <iframe src="https://www.youtube.com/embed/{{ vid.url|youtube_id }}"></iframe>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <h1>{{ book.title }}</h1>
+            <p class="lead">{{ book.author }}</p>
+            <hr>
+            <div class="mb-3">
+                <h5>{% trans "Tavsif" %}</h5>
+                <p>{{ book.description }}</p>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <p><strong>{% trans "Kategoriya" %}:</strong> {{ book.category.name }}</p>
+                    <p><strong>{% trans "Muqova" %}:</strong> {{ book.get_cover_type_display }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>{% trans "Sahifalar soni" %}:</strong> {{ book.pages }}</p>
+                    <p><strong>{% trans "Narxi" %}:</strong> {{ book.price|floatformat:0|intcomma }} {% trans "so'm" %}</p>
+                </div>
+            </div>
+            <form action="{% url 'orders:cart_add' book.id %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <div class="input-group mb-3" style="max-width: 200px;">
+                    <input type="number" name="quantity" value="1" min="1" class="form-control">
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-cart-plus"></i> {% trans "Savatga qo'shish" %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function setMainBookImage(thumb) {
+    const mainImg = document.getElementById('main-book-image');
+    if (mainImg && thumb.src) {
+        mainImg.src = thumb.src;
+    }
+}
+</script>
+{% endblock %} 

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{#{% load account socialaccount %}#}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h3 mb-0">{% trans "Sign In" %}</h1>
+                </div>
+                <div class="card-body">
+                    <form class="login" method="POST" action="{% url 'account_login' %}">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+                        <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+                    </form>
+                    <hr>
+                    <p>
+                        {% blocktrans %}Akkauntingiz yo'qmi?{% endblocktrans %}<a href="{{ signup_url }}">
+                        {% blocktrans %}Ro'yxatdan o'ting{% endblocktrans %}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %} 

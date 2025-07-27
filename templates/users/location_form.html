@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+{% block title %}
+    {% if form.instance.pk %}
+        {% trans "Manzilni tahrirlash" %}
+    {% else %}
+        {% trans "Yangi manzil" %}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {% if form.instance.pk %}
+                            {% trans "Manzilni tahrirlash" %}
+                        {% else %}
+                            {% trans "Yangi manzil" %}
+                        {% endif %}
+                    </h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_address" class="form-label">{% trans "Manzil" %}</label>
+                            <input type="text" class="form-control" id="id_address" name="address" 
+                                   value="{{ form.instance.address }}" required placeholder="Ko'cha, uy raqami">
+                            {% if form.address.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.address.errors|join:", " }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_landmark" class="form-label">{% trans "Mo'ljal" %}</label>
+                            <input type="text" class="form-control" id="id_landmark" name="landmark" 
+                                   value="{{ form.instance.landmark }}" required
+                                   placeholder="Yaqin-atrofdagi taniqli joy">
+                            {% if form.landmark.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.landmark.errors|join:", " }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="id_is_default" name="is_default" 
+                                       {% if form.instance.is_default %}checked{% endif %}>
+                                <label class="form-check-label" for="id_is_default">{% trans "Asosiy manzil" %}</label>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary">
+                                {% if form.instance.pk %}
+                                    {% trans "Saqlash" %}
+                                {% else %}
+                                    {% trans "Qo'shish" %}
+                                {% endif %}
+                            </button>
+                            <a href="{% url 'users:profile' %}" class="btn btn-secondary">{% trans "Bekor qilish" %}</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

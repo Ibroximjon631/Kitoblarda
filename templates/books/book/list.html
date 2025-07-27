@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block title %}
+    {% if category %}{{ category.name }}{% else %}{% trans "Barcha kitoblar" %}{% endif %}
+{% endblock %}
+
+{% block content %}
+<!-- Offcanvas kategoriyalar (faqat mobil) -->
+<div class="d-md-none">
+    <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#categoryOffcanvas" aria-controls="categoryOffcanvas">
+        <i class="fas fa-list"></i> {% blocktrans %}Kategoriyalar{% endblocktrans %}
+    </button>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="categoryOffcanvas" aria-labelledby="categoryOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="categoryOffcanvasLabel">{% blocktrans %}Kategoriyalar{% endblocktrans %}</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Yopish"></button>
+        </div>
+        <div class="offcanvas-body p-0">
+            <div class="list-group list-group-flush">
+                <a href="{% url 'books:book_list' %}" class="list-group-item list-group-item-action {% if not current_category %}active bg-primary text-white border-primary{% endif %}">
+                    {% trans "Barcha kitoblar" %}
+                </a>
+                {% for c in categories %}
+                    <a href="{% url 'books:book_list_by_category' c.slug %}" class="list-group-item list-group-item-action {% if current_category and current_category.slug == c.slug %}active bg-primary text-white border-primary{% endif %}">
+                        {{ c.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Qidiruv paneli -->
+<div class="row mb-3">
+    <div class="col-12">
+        <form method="get" class="d-flex align-items-center gap-2">
+            <input type="text" name="q" value="{{ search_query }}" class="form-control form-control-lg" placeholder="{% blocktrans %}Qidiruv...{% endblocktrans %}" aria-label="Qidiruv">
+            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 d-none d-md-block">
+        <!-- Kategoriyalar paneli (faqat desktop) -->
+        <div class="card border-0 shadow-sm">
+            <div class="card-header">
+                <h5 class="card-title mb-0">{% blocktrans %}Kategoriyalar{% endblocktrans %}</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{% url 'books:book_list' %}" class="list-group-item list-group-item-action {% if not current_category %}active bg-primary text-white border-primary{% endif %}">
+                    {% trans "Barcha kitoblar" %}
+                </a>
+                {% for c in categories %}
+                    <a href="{% url 'books:book_list_by_category' c.slug %}" class="list-group-item list-group-item-action {% if current_category and current_category.slug == c.slug %}active bg-primary text-white border-primary{% endif %}">
+                        {{ c.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <h1 class="mb-4">
+            {% if current_category %}
+                {{ current_category.name }}
+            {% else %}
+            {% trans "Barcha kitoblar" %}
+            {% endif %}
+        </h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+            {% for book in books %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="position-relative" style="height:270px;">
+                            {% if book.image or book.images.all %}
+                                <div id="carousel-book-{{ book.id }}" class="carousel slide h-100" data-bs-ride="carousel">
+                                    <div class="carousel-inner h-100">
+                                        {% if book.image %}
+                                            <div class="carousel-item active h-100">
+                                                <img src="{{ book.image.url }}" class="card-img-top h-100" style="object-fit:cover; height:270px; width:100%; border-radius:12px 12px 0 0;" loading="lazy" alt="{{ book.title }} asosiy rasm" aria-label="{{ book.title }} asosiy rasm">
+                                            </div>
+                                        {% endif %}
+                                        {% for img in book.images.all %}
+                                            <div class="carousel-item h-100 {% if not book.image and forloop.first %}active{% endif %}">
+                                                <img src="{{ img.image.url }}" class="card-img-top h-100" style="object-fit:cover; height:270px; width:100%; border-radius:12px 12px 0 0;" loading="lazy" alt="{{ book.title }} qo'shimcha rasm {{ forloop.counter }}" aria-label="{{ book.title }} qo'shimcha rasm {{ forloop.counter }}">
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if book.image and book.images.all or book.images.count > 1 %}
+                                        <div class="carousel-indicators" style="bottom: -18px;">
+                                            {% if book.image %}
+                                                <button type="button" data-bs-target="#carousel-book-{{ book.id }}" data-bs-slide-to="0" class="active" aria-current="true" aria-label="1-rasm"></button>
+                                            {% endif %}
+                                            {% for img in book.images.all %}
+                                                <button type="button" data-bs-target="#carousel-book-{{ book.id }}" data-bs-slide-to="{{ forloop.counter }}" aria-label="{{ forloop.counter|add:1 }}-rasm"></button>
+                                            {% endfor %}
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel-book-{{ book.id }}" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">{% blocktrans %}Oldingi{% endblocktrans %}</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel-book-{{ book.id }}" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">{% blocktrans %}Keyingi{% endblocktrans %}</span>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            <!-- Badge joyi -->
+                            {# <span class="position-absolute top-0 start-0 m-2 badge bg-warning text-dark">Yangi</span> #}
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title mb-1" style="min-height:48px;">{{ book.title }}</h5>
+                            <div class="mb-2 text-secondary small">{{ book.author }}</div>
+                            <div class="mb-2"><span class="badge bg-light text-dark border">{{ book.pages }} {% blocktrans %}sahifa{% endblocktrans %}</span></div>
+                            <div class="mb-2 fs-5 fw-bold text-success">{{ book.price|floatformat:0|intcomma }} {% blocktrans %}so'm{% endblocktrans %}</div>
+                            <div class="mt-auto d-flex gap-2">
+                      <a href="{% url 'books:book_detail' book.slug %}" class="btn btn-outline-primary w-50">
+    {% blocktrans %}Batafsil{% endblocktrans %}
+</a>
+
+<form action="{% url 'orders:cart_add' book.id %}" method="post" class="d-inline w-50 add-to-cart-form">
+    {% csrf_token %}
+    <input type="hidden" name="quantity" value="1">
+    <button type="submit" class="btn btn-success w-100">
+        <i class="fas fa-cart-plus"></i> {% blocktrans %}Savatga{% endblocktrans %}
+    </button>
+</form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <p class="text-center">{% blocktrans %}Kitoblar topilmadi{% endblocktrans %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// AJAX orqali savatga qo'shish va toast ko'rsatish
+const forms = document.querySelectorAll('.add-to-cart-form');
+forms.forEach(form => {
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const url = form.action;
+        const formData = new FormData(form);
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+            },
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                showCartToast();
+            } else {
+                return response.text().then(text => { alert('Xatolik: ' + text); });
+            }
+        })
+        .catch(() => alert('Xatolik yuz berdi!'));
+    });
+});
+
+
+
+function showCartToast() {
+    const toastEl = document.getElementById('cartToast');
+    if (toastEl) {
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }
+}
+</script>
+{% endblock %} 

@@ -1,0 +1,506 @@
+    {% load static %}
+    {% load i18n %}
+    <!DOCTYPE html>
+    <html lang="uz">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %} {% trans "Kitoblarda" %} {% endblock %}</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+        <link href="{% static 'css/style.css' %}" rel="stylesheet">
+        <style>
+            :root {
+                --primary: #21439C;
+                --primary-hover: #19337a;
+                --secondary: #FDFDFD;
+                --background: #fff;
+                --text: #222;
+                --border: #e0e0e0;
+                --card-bg: #fff;
+                --input-bg: #fff;
+                --input-border: #e0e0e0;
+                --shadow: 0 2px 8px rgba(33, 67, 156, 0.07);
+            }
+
+            [data-theme="dark"] {
+                --primary: #21439C;
+                --primary-hover: #90caf9;
+                --secondary: #23272b;
+                --background: #181a1b;
+                --text: #f1f1f1;
+                --border: #444;
+                --card-bg: #23272b;
+                --input-bg: #23272b;
+                --input-border: #444;
+                --shadow: 0 2px 8px rgba(33, 67, 156, 0.15);
+            }
+
+            body, html {
+                background: var(--background) !important;
+                color: var(--text) !important;
+            }
+
+            .navbar, .card, .dropdown-menu, .modal-content, .list-group-item, .form-control, .btn, .alert, .footer, .offcanvas {
+                background: var(--card-bg) !important;
+                color: var(--text) !important;
+            }
+
+            .form-control, input[type="text"], input[type="search"] {
+                background: var(--input-bg) !important;
+                border-color: var(--input-border) !important;
+                color: var(--text) !important;
+            }
+
+            .form-control:focus, input[type="text"]:focus, input[type="search"]:focus {
+                border-color: var(--primary) !important;
+                box-shadow: 0 0 0 0.25rem rgba(33, 67, 156, 0.15);
+            }
+
+            .btn-primary, .btn-success {
+                background-color: var(--primary) !important;
+                border-color: var(--primary) !important;
+                color: #fff !important;
+            }
+
+            .btn-primary:hover, .btn-success:hover {
+                background-color: var(--primary-hover) !important;
+                border-color: var(--primary-hover) !important;
+            }
+
+            .btn-outline-primary {
+                color: var(--primary) !important;
+                border-color: var(--primary) !important;
+            }
+
+            .btn-outline-primary:hover {
+                background: var(--primary) !important;
+                color: #fff !important;
+            }
+
+            .badge.bg-primary, .bg-primary {
+                background: var(--primary) !important;
+                color: #fff !important;
+            }
+
+            .border-primary {
+                border-color: var(--primary) !important;
+            }
+
+            .shadow, .shadow-sm, .shadow-lg {
+                box-shadow: var(--shadow) !important;
+            }
+
+            .list-group-item.active {
+                background: var(--primary) !important;
+                color: #fff !important;
+                border-color: var(--primary) !important;
+            }
+
+            .dropdown-menu {
+                border-color: var(--border) !important;
+            }
+
+            .footer {
+                background: var(--secondary) !important;
+                color: var(--text) !important;
+            }
+
+            .offcanvas {
+                background: var(--card-bg) !important;
+                color: var(--text) !important;
+            }
+
+            .card-header, .offcanvas-header {
+                background: var(--card-bg) !important;
+                color: var(--text) !important;
+                border-bottom: 1px solid var(--border) !important;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .navbar {
+                background: var(--card-bg) !important;
+                color: var(--text) !important;
+                padding: 0.8rem 0;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+                position: sticky;
+                top: 0;
+                z-index: 1000;
+            }
+
+            .navbar-brand {
+                padding: 0;
+            }
+
+            .navbar-brand img {
+                height: 45px;
+                width: auto;
+                transition: transform 0.3s ease;
+            }
+
+            .navbar-brand img:hover {
+                transform: scale(1.05);
+            }
+
+            .nav-link {
+                color: var(--text-color) !important;
+                font-weight: 500;
+                padding: 0.7rem 1.2rem;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                margin: 0 0.2rem;
+            }
+
+            .nav-link:hover {
+                color: var(--primary-color) !important;
+                background-color: var(--light-gray);
+            }
+
+
+            .dropdown-item {
+                color: var(--text-color);
+                border-radius: 4px;
+                padding: 0.7rem 1rem;
+                transition: all 0.3s ease;
+            }
+
+            .dropdown-item:hover {
+                background: var(--light-gray);
+                color: var(--primary-color);
+            }
+
+            .dropdown-divider {
+                border-color: var(--border-color);
+                margin: 0.5rem 0;
+            }
+
+            .container {
+                flex: 1;
+            }
+
+            /* Navbar toggler customization */
+            .navbar-toggler {
+                border: none;
+                padding: 0.5rem;
+            }
+
+            .navbar-toggler:focus {
+                box-shadow: none;
+            }
+
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(33, 150, 243, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+            }
+
+            /* Alert customization */
+            .alert {
+                border: none;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            }
+
+            .navbar, .navbar * {
+                color: var(--text-color) !important;
+            }
+
+            .navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
+                color: var(--primary-color) !important;
+            }
+
+            .navbar .dropdown-menu {
+                background: var(--light-gray) !important;
+                color: var(--text-color) !important;
+            }
+
+            [data-theme="dark"] .navbar, [data-theme="dark"] .navbar * {
+                color: #f1f1f1 !important;
+            }
+
+            [data-theme="dark"] .navbar .dropdown-menu {
+                background: #23272b !important;
+                color: #f1f1f1 !important;
+            }
+        </style>
+        {% block extra_css %}{% endblock %}
+    </head>
+    <body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'books:book_list' %}">
+                <img id="siteLogo" src="{% static 'images/logo_light.png' %}" alt="{% trans "Kitoblarda logo" %}" class="img-fluid">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'books:book_list' %}">
+                            <i class="fas fa-book"></i> {% trans "Kitoblar" %}
+                                        </a>
+                    <li class="nav-item position-relative">
+                    <a class="nav-link" href="{% url 'orders:cart_detail' %}">
+                        <i class="fas fa-shopping-cart"></i> {% trans "Savat" %}
+                        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">
+                            <!-- JS orqali son qo‘yiladi -->
+                        </span>
+                    </a>
+                </li>
+
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'orders:order_history' %}">
+                                <i class="fas fa-history"></i> {% trans "Buyurtmalar tarixi" %}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav align-items-center ms-auto">
+                    <li class="nav-item me-2">
+                        <button id="themeToggleBtn" class="btn btn-outline-secondary btn-sm" title="{% trans "Tungi/Kun rejimi" %}"
+                                aria-label="Tungi/Kun rejimi">
+                            <i id="themeToggleIcon" class="fas fa-moon"></i>
+                        </button>
+                    </li>
+
+                    {% block language_switcher %}
+                        <form method="post" action="{% url 'set_language' %}" class="nav-item dropdown me-2" id="language-switcher-form">
+                            {% csrf_token %}
+                            <select id="language-select" name="language"
+                            class="nav-link dropdown-toggle" onchange="submitForm()">
+                                {% get_current_language as LANGUAGE_CODE %}
+                                {% if LANGUAGE_CODE == 'uz' %}
+                                    <option value="uz">🇺🇿 {% trans "O'zbekcha" %}</option>
+                                    <option value="ru">🇷🇺 {% trans "Русский" %}</option>
+                                {% elif LANGUAGE_CODE == 'ru' %}
+                                    <option value="ru">🇷🇺 {% trans "Русский" %}</option>
+                                    <option value="uz">🇺🇿 {% trans "O'zbekcha" %}</option>
+                                {% else %}
+                                    {{ LANGUAGE_CODE|upper }}
+                                {% endif %}
+
+                            </select>
+    {#                        <button type="submit">Switch</button>#}
+                        </form>
+                    {% endblock %}
+
+    {#                <li class="nav-item dropdown me-2">#}
+    {#                    <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button"#}
+    {#                       data-bs-toggle="dropdown" aria-expanded="false">#}
+    {#                        {% get_current_language as LANGUAGE_CODE %}#}
+    {#                        {% if LANGUAGE_CODE == 'uz' %}🇺🇿 O‘zbekcha{% elif LANGUAGE_CODE == 'ru' %}🇷🇺 Русский{% else %}#}
+    {#                            {{ LANGUAGE_CODE|upper }}{% endif %}#}
+    {#                    </a>#}
+    {#                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">#}
+    {#                        <li><a class="dropdown-item" href="/uz{{ request.get_full_path|slice:'3:' }}">🇺🇿 O‘zbekcha</a>#}
+    {#                        </li>#}
+    {#                        <li><a class="dropdown-item" href="/ru{{ request.get_full_path|slice:'3:' }}">🇷🇺 Русский</a>#}
+    {#                        </li>#}
+    {#                    </ul>#}
+    {##}
+    {#                </li>#}
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-bs-toggle="dropdown">
+                                <i class="fas fa-user"></i> {{ user.first_name|default:user.phone }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="{% url 'users:profile' %}">{% trans "Profil" %}</a></li>
+                                <li><a class="dropdown-item"
+                                       href="{% url 'orders:order_history' %}">{% trans "Buyurtmalar tarixi" %}</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li>
+                                    <form action="{% url 'users:logout' %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="dropdown-item"
+                                                style="background:none; border:none; padding:0; margin:0; cursor:pointer;">
+                                            {% trans "Chiqish" %}
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:login' %}">
+                                <i class="fas fa-sign-in-alt"></i> {% trans "Kirish" %}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'users:register' %}">
+                                <i class="fas fa-user-plus"></i> {% trans "Ro'yxatdan o'tish" %}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function submitForm() {
+         document.getElementById("language-switcher-form").submit();
+       }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function (alert) {
+                setTimeout(function () {
+                    var bsAlert = new bootstrap.Alert(alert);
+                    bsAlert.close();
+                }, 3000);
+            });
+        });
+    </script>
+    <script>
+        const themeBtn = document.getElementById('themeToggleBtn');
+        const themeIcon = document.getElementById('themeToggleIcon');
+
+        function setTheme(mode) {
+            document.documentElement.setAttribute('data-theme', mode);
+            localStorage.setItem('theme', mode);
+            if (themeIcon) themeIcon.className = mode === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            setLogoByTheme(mode)
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || 'light';
+            setTheme(current === 'dark' ? 'light' : 'dark');
+        }
+
+        if (themeBtn) {
+            themeBtn.addEventListener('click', toggleTheme);
+            // Boshlang'ich yuklashda theme ni o'qish
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) setTheme(savedTheme);
+            else setTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        }
+    </script>
+    <script>
+        const logoImg = document.getElementById('siteLogo');
+
+        function setLogoByTheme(theme) {
+            if (!logoImg) return;
+
+            if (theme === 'dark') {
+                logoImg.src = "{% static 'images/logo_dark.jpg' %}";
+            } else {
+                logoImg.src = "{% static 'images/logo_light.png' %}";
+            }
+        }
+
+        function getPreferredTheme() {
+            return localStorage.getItem('theme') || 'light';
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const theme = getPreferredTheme();
+            setLogoByTheme(theme);
+        });
+    </script>
+    <!-- TOAST: Savatga qo‘shildi -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+        <div id="cartToast" class="toast align-items-center text-bg-success border-0 shadow rounded-3"
+             role="alert" aria-live="assertive" aria-atomic="true"
+             data-bs-delay="2000" data-bs-autohide="true">
+            <div class="d-flex">
+                <div class="toast-body">
+                    <i class="fas fa-check-circle me-2"></i> Kitob savatga qo‘shildi!
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto"
+                        data-bs-dismiss="toast" aria-label="Yopish"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+
+
+    <!-- AJAX bilan toast ko‘rsatish -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const forms = document.querySelectorAll(".add-to-cart-form");
+        forms.forEach(form => {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                    method: "POST",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "X-CSRFToken": formData.get("csrfmiddlewaretoken"),
+                    },
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        const toastEl = document.getElementById('cartToast');
+                        const toast = new bootstrap.Toast(toastEl);
+                        toast.show();
+                        updateCartBadge();
+                    } else {
+                        alert("Xatolik yuz berdi!");
+                    }
+                });
+            });
+        });
+    });
+    </script>
+<script>
+    function updateCartBadge() {
+        fetch("{% url 'orders:cart_items_count' %}")
+            .then(response => response.json())
+            .then(data => {
+                const badge = document.getElementById('cart-badge');
+
+                if (data.count > 0) {
+                    badge.textContent = data.count;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            })
+            .catch(error => console.error('Xatolik:', error));
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartBadge();
+    });
+</script>
+
+
+
+
+    {% block extra_js %}{% endblock %}
+    </body>
+    </html>

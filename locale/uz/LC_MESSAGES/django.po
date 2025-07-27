@@ -1,0 +1,496 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-24 19:16+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: books/models.py:8
+msgid "Name"
+msgstr "Ism"
+
+#: books/models.py:9 books/models.py:34
+msgid "Slug"
+msgstr "Slug"
+
+#: books/models.py:12 books/models.py:26
+msgid "Category"
+msgstr "Kategoriya"
+
+#: books/models.py:13
+msgid "Categories"
+msgstr "Kategoriyalar"
+
+#: books/models.py:20
+msgid "Hard cover"
+msgstr "Qattiq muqovali"
+
+#: books/models.py:21
+msgid "Soft cover"
+msgstr "Yumshoq muqovali"
+
+#: books/models.py:24
+msgid "Title"
+msgstr "Nomi"
+
+#: books/models.py:25
+msgid "Author"
+msgstr "Muallifi"
+
+#: books/models.py:27
+msgid "Price"
+msgstr "Narx"
+
+#: books/models.py:28
+msgid "Description"
+msgstr "Izoh"
+
+#: books/models.py:29
+msgid "Cover type"
+msgstr "Muqova turi"
+
+#: books/models.py:30
+msgid "Number of pages"
+msgstr "Sahifalar soni"
+
+#: books/models.py:31 books/models.py:50
+msgid "Book image"
+msgstr "Kitob rasmi"
+
+#: books/models.py:32
+msgid "Created at"
+msgstr "Yaratilgan vaqt"
+
+#: books/models.py:33
+msgid "Updated at"
+msgstr "Yangilangan vaqt"
+
+#: books/models.py:37 books/models.py:45 books/models.py:57
+msgid "Book"
+msgstr "Kitob"
+
+#: books/models.py:38
+msgid "Books"
+msgstr "Kitoblar"
+
+#: books/models.py:46
+msgid "Additional image"
+msgstr "Qo'shimcha rasm"
+
+#: books/models.py:47 books/models.py:59
+msgid "Uploaded at"
+msgstr "Yuklangan vaqt"
+
+#: books/models.py:51
+msgid "Book images"
+msgstr "Kitob rasmlari"
+
+#: books/models.py:58
+msgid "YouTube URL"
+msgstr "YouTube havolasi"
+
+#: books/models.py:62
+msgid "Book video"
+msgstr "Kitob videosi"
+
+#: books/models.py:63
+msgid "Book videos"
+msgstr "Kitob videolari"
+
+#: orders/models.py:38 templates/orders/order/detail.html:5
+#: templates/orders/order/detail.html:14 templates/orders/order/detail.html:22
+#: templates/orders/order/history.html:30
+#: templates/orders/payment/process.html:16
+msgid "Buyurtma"
+msgstr "Buyurtma"
+
+#: orders/models.py:39
+#, fuzzy
+#| msgid "Buyurtma"
+msgid "Buyurtmalar"
+msgstr "Buyurtma"
+
+#: orders/models.py:59
+#, fuzzy
+#| msgid "Buyurtma elementlari"
+msgid "Buyurtma elementi"
+msgstr "Buyurtmalar elementlari"
+
+#: orders/models.py:60 templates/orders/order/detail.html:52
+msgid "Buyurtma elementlari"
+msgstr "Buyurtmalar elementlari"
+
+#: templates/account/login.html:6 templates/account/login.html:13
+#: templates/account/login.html:22
+msgid "Sign In"
+msgstr "Tizimga kirish"
+
+#: templates/account/login.html:26
+msgid "Akkauntingiz yo'qmi?"
+msgstr "Akkauntingiz yo'qmi?"
+
+#: templates/account/login.html:27
+msgid "Ro'yxatdan o'ting"
+msgstr "Ro'yxatdan o'ting"
+
+#: templates/admin/base_site.html:78 templates/admin/base_site.html:82
+#: templates/orders/order/detail.html:96 templates/orders/order/detail.html:97
+#: templates/orders/payment.html:34 templates/orders/payment/process.html:37
+msgid "To'lov skrini"
+msgstr "To'lov skrini"
+
+#: templates/base.html:8
+msgid "Kitoblarda"
+msgstr "Kitoblarda"
+
+#: templates/base.html:235
+msgid "Kitoblarda logo"
+msgstr "Kitoblarda logo"
+
+#: templates/base.html:244
+msgid "Kitoblar"
+msgstr "Kitoblar"
+
+#: templates/base.html:249 templates/orders/cart/detail.html:5
+#: templates/orders/cart/detail.html:8 templates/orders/order/create.html:28
+msgid "Savat"
+msgstr "Savat"
+
+#: templates/base.html:255 templates/base.html:313
+#: templates/orders/order/detail.html:13 templates/orders/order/history.html:6
+#: templates/orders/order/history.html:14
+msgid "Buyurtmalar tarixi"
+msgstr "Buyurtmalar tarixi"
+
+#: templates/base.html:262
+msgid "Tungi/Kun rejimi"
+msgstr "Tungi/Kun rejimi"
+
+#: templates/base.html:275 templates/base.html:279
+msgid "O'zbekcha"
+msgstr "O'zbekcha"
+
+#: templates/base.html:276 templates/base.html:278
+msgid "Русский"
+msgstr "Русский"
+
+#: templates/base.html:311 templates/users/profile.html:5
+msgid "Profil"
+msgstr "Profil"
+
+#: templates/base.html:322
+msgid "Chiqish"
+msgstr "Chiqish"
+
+#: templates/base.html:331 templates/users/login.html:4
+#: templates/users/login.html:9 templates/users/login.html:13
+msgid "Kirish"
+msgstr "Kirish"
+
+#: templates/base.html:336 templates/users/register.html:5
+#: templates/users/register.html:29 templates/users/register.html:36
+msgid "Ro'yxatdan o'tish"
+msgstr "Ro'yxatdan o'tish"
+
+#: templates/books/book/detail.html:27
+msgid "Videolar"
+msgstr "Videolar"
+
+#: templates/books/book/detail.html:43
+msgid "Tavsif"
+msgstr "Tavsif"
+
+#: templates/books/book/detail.html:48
+msgid "Kategoriya"
+msgstr "Kategoriya"
+
+#: templates/books/book/detail.html:49
+msgid "Muqova"
+msgstr "Muqova"
+
+#: templates/books/book/detail.html:52
+msgid "Sahifalar soni"
+msgstr "Sahifalar soni"
+
+#: templates/books/book/detail.html:53 templates/orders/cart/detail.html:17
+#: templates/orders/order/detail.html:58
+msgid "Narxi"
+msgstr "Narxi"
+
+#: templates/books/book/detail.html:53 templates/books/book/list.html:116
+#: templates/orders/cart/detail.html:31 templates/orders/cart/detail.html:32
+#: templates/orders/cart/detail.html:47 templates/orders/order/create.html:33
+#: templates/orders/order/create.html:38 templates/orders/order/detail.html:28
+#: templates/orders/order/detail.html:67 templates/orders/order/detail.html:69
+#: templates/orders/order/detail.html:76 templates/orders/order/history.html:42
+#: templates/orders/payment/process.html:19
+msgid "so'm"
+msgstr "so'm"
+
+#: templates/books/book/detail.html:61
+msgid "Savatga qo'shish"
+msgstr "Savatga qo'shish"
+
+#: templates/books/book/list.html:6 templates/books/book/list.html:23
+#: templates/books/book/list.html:52 templates/books/book/list.html:67
+msgid "Barcha kitoblar"
+msgstr "Barcha kitoblar"
+
+#: templates/books/book/list.html:13 templates/books/book/list.html:17
+#: templates/books/book/list.html:48
+msgid "Kategoriyalar"
+msgstr "Kategoriyalar"
+
+#: templates/books/book/list.html:38
+msgid "Qidiruv..."
+msgstr "Qidiruv..."
+
+#: templates/books/book/list.html:100
+msgid "Oldingi"
+msgstr "Oldingi"
+
+#: templates/books/book/list.html:104
+msgid "Keyingi"
+msgstr "Keyingi"
+
+#: templates/books/book/list.html:115
+msgid "sahifa"
+msgstr "sahifa"
+
+#: templates/books/book/list.html:118 templates/orders/order/history.html:59
+msgid "Batafsil"
+msgstr "Batafsil"
+
+#: templates/books/book/list.html:123
+msgid "Savatga"
+msgstr "Savatga"
+
+#: templates/books/book/list.html:132
+msgid "Kitoblar topilmadi"
+msgstr "Kitoblar topilmadi"
+
+#: templates/orders/cart/detail.html:15 templates/orders/order/detail.html:57
+msgid "Kitob"
+msgstr "Kitob"
+
+#: templates/orders/cart/detail.html:16 templates/orders/order/detail.html:59
+msgid "Soni"
+msgstr "Soni"
+
+#: templates/orders/cart/detail.html:18 templates/orders/cart/detail.html:46
+#: templates/orders/order/create.html:38 templates/orders/order/detail.html:60
+#: templates/orders/order/detail.html:75
+msgid "Jami"
+msgstr "Jami"
+
+#: templates/orders/cart/detail.html:56 templates/orders/cart/detail.html:75
+#: templates/orders/order/history.html:21
+msgid "Kitoblarga qaytish"
+msgstr "Kitoblarga qaytish"
+
+#: templates/orders/cart/detail.html:62 templates/orders/order/create.html:4
+#: templates/orders/order/create.html:8 templates/orders/order/create.html:25
+msgid "Buyurtma berish"
+msgstr "Buyurtma berish"
+
+#: templates/orders/cart/detail.html:67
+msgid "Buyurtma berish uchun kiring"
+msgstr "Buyurtma berish uchun kiring"
+
+#: templates/orders/cart/detail.html:73
+msgid "Savat bo'sh"
+msgstr "Savat bo'sh"
+
+#: templates/orders/order/detail.html:12 templates/orders/order/history.html:13
+msgid "Bosh sahifa"
+msgstr "Bosh sahifa"
+
+#: templates/orders/order/detail.html:27 templates/orders/order/history.html:31
+msgid "Sana"
+msgstr "Sana"
+
+#: templates/orders/order/detail.html:28 templates/orders/order/history.html:32
+#: templates/orders/payment/process.html:19
+msgid "Jami summa"
+msgstr "Jami summa"
+
+#: templates/orders/order/detail.html:29 templates/users/location_form.html:28
+msgid "Manzil"
+msgstr "Manzil"
+
+#: templates/orders/order/detail.html:30 templates/users/location_form.html:38
+msgid "Mo'ljal"
+msgstr "Mo'ljal"
+
+#: templates/orders/order/detail.html:33 templates/orders/order/history.html:33
+msgid "Holat"
+msgstr "Holat"
+
+#: templates/orders/order/detail.html:35 templates/orders/order/history.html:45
+msgid "Kutilmoqda"
+msgstr "Kutilmoqda"
+
+#: templates/orders/order/detail.html:37 templates/orders/order/history.html:47
+msgid "Tasdiqlanishi kutilmoqda"
+msgstr "Tasdiqlanishi kutilmoqda"
+
+#: templates/orders/order/detail.html:39 templates/orders/order/history.html:49
+msgid "Tasdiqlangan, tayyorlanmoqda"
+msgstr "Tasdiqlangan, tayyorlanmoqda"
+
+#: templates/orders/order/detail.html:41 templates/orders/order/history.html:51
+msgid "Yetkazib berilishi kutilmoqda"
+msgstr "Yetkazib berilishi kutilmoqda"
+
+#: templates/orders/order/detail.html:43 templates/orders/order/history.html:53
+msgid "Yetkazib berilgan"
+msgstr "Yetkazib berilgan"
+
+#: templates/orders/order/detail.html:45 templates/orders/order/history.html:55
+msgid "Bekor qilindi"
+msgstr "Bekor qilindi"
+
+#: templates/orders/order/detail.html:48
+msgid "Yangilangan sana"
+msgstr "Yangilangan sana"
+
+#: templates/orders/order/detail.html:88 templates/orders/payment.html:13
+#: templates/orders/payment/process.html:13
+msgid "To'lov ma'lumotlari"
+msgstr "To'lov ma'lumotlari"
+
+#: templates/orders/order/detail.html:92
+msgid "Karta raqami"
+msgstr "Karta raqami"
+
+#: templates/orders/order/detail.html:102
+msgid "To'lov ma'lumotlari kiritilmagan"
+msgstr "To'lov ma'lumotlari kiritilmagan"
+
+#: templates/orders/order/detail.html:103
+msgid "To'lovni amalga oshirish"
+msgstr "To'lovni amalga oshirish"
+
+#: templates/orders/order/detail.html:113
+msgid "Barcha buyurtmalarga qaytish"
+msgstr "Barcha buyurtmalarga qaytish"
+
+#: templates/orders/order/history.html:19
+msgid "Mening buyurtmalarim"
+msgstr "Mening buyurtmalarim"
+
+#: templates/orders/order/history.html:34
+msgid "Amallar"
+msgstr "Amallar"
+
+#: templates/orders/order/history.html:107
+msgid "Sizda hali buyurtmalar yo'q"
+msgstr "Sizda hali buyurtmalar yo'q"
+
+#: templates/orders/order/history.html:108
+msgid "Kitoblarni ko'rish"
+msgstr "Kitoblarni ko'rish"
+
+#: templates/orders/payment.html:5 templates/orders/payment/process.html:5
+msgid "To'lov"
+msgstr "To'lov"
+
+#: templates/orders/payment.html:18
+msgid "To'lov uchun karta raqami:"
+msgstr "To'lov uchun karta raqami:"
+
+#: templates/orders/payment.html:21
+msgid "Karta raqamiga to'lovni amalga oshiring va skrinshotni yuklang."
+msgstr "Karta raqamiga to'lovni amalga oshiring va skrinshotni yuklang."
+
+#: templates/orders/payment.html:26
+msgid "Jami summa: "
+msgstr "Jami summa: "
+
+#: templates/orders/payment.html:28
+msgid " so'm"
+msgstr "so'm"
+
+#: templates/orders/payment.html:38
+msgid "To'lov skrinini yuklang (rasm formatida, masalan, PNG yoki JPG)."
+msgstr "To'lov skrinini yuklang (rasm formatida, masalan, PNG yoki JPG)."
+
+#: templates/orders/payment.html:44 templates/orders/payment/process.html:43
+msgid "To'lovni tasdiqlash"
+msgstr "To'lovni tasdiqlash"
+
+#: templates/orders/payment.html:48 templates/users/location_form.html:63
+msgid "Bekor qilish"
+msgstr "Bekor qilish"
+
+#: templates/orders/payment/process.html:20
+msgid "To'lovni amalga oshirish uchun quyidagi karta raqamiga pul o'tkazing"
+msgstr "To'lovni amalga oshirish uchun quyidagi karta raqamiga pul o'tkazing"
+
+#: templates/orders/payment/process.html:39
+msgid "To'lovni amalga oshirgandan so'ng, to'lov skrinini yuklang"
+msgstr "To'lovni amalga oshirgandan so'ng, to'lov skrinini yuklang"
+
+#: templates/orders/payment/process.html:48
+msgid "To'lov tasdiqlangandan so'ng, buyurtmangiz ishlab chiqiladi"
+msgstr "To'lov tasdiqlangandan so'ng, buyurtmangiz ishlab chiqiladi"
+
+#: templates/users/location_form.html:6 templates/users/location_form.html:20
+msgid "Manzilni tahrirlash"
+msgstr "Manzilni tahrirlash"
+
+#: templates/users/location_form.html:8 templates/users/location_form.html:22
+msgid "Yangi manzil"
+msgstr "Yangi manzil"
+
+#: templates/users/location_form.html:52
+msgid "Asosiy manzil"
+msgstr "Asosiy manzil"
+
+#: templates/users/location_form.html:58 templates/users/profile.html:24
+msgid "Saqlash"
+msgstr "Saqlash"
+
+#: templates/users/location_form.html:60
+msgid "Qo'shish"
+msgstr "Qo'shish"
+
+#: templates/users/profile.html:13
+msgid "Profil ma'lumotlari"
+msgstr "Profil ma'lumotlari"
+
+#: templates/users/profile.html:17
+msgid "Ism"
+msgstr "Ism"
+
+#: templates/users/profile.html:21
+msgid "Telefon raqam"
+msgstr "Telefon raqam"
+
+#: users/models.py:10
+msgid "Phone number"
+msgstr "Telefon raqam"
+
+#: users/models.py:19
+msgid "User"
+msgstr "Foydalanuvchi"
+
+#: users/models.py:20
+msgid "Users"
+msgstr "Foydalanuvchilar"
+
+#~ msgid "Ro‘yxatdan o‘tish"
+#~ msgstr "Ro‘yxatdan o‘tish"

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+{% block title %}{% trans "To'lov" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card border-0 shadow-lg rounded-4">
+                <div class="card-body p-4">
+                    <h3 class="card-title text-center mb-4 fw-bold text-primary">{% blocktrans %}To'lov ma'lumotlari{% endblocktrans %}</h3>
+                    <div class="mb-4">
+                        <div class="bg-light rounded-4 p-4 mb-3 border-0 shadow-sm">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-credit-card fa-lg text-success me-2"></i>
+                                <span class="fw-semibold">{% blocktrans %}To'lov uchun karta raqami:{% endblocktrans %}</span>
+                            </div>
+                            <div class="fs-4 fw-bold text-dark user-select-all mb-2">{{ payment_settings.card_number }}</div>
+                            <div class="text-muted small">{% blocktrans %}Karta raqamiga to'lovni amalga oshiring va skrinshotni yuklang.{% endblocktrans %}</div>
+                        </div>
+                        <div class="bg-white rounded-4 p-4 border-0 shadow-sm mb-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-money-bill-wave fa-lg text-primary me-2"></i>
+                                <span class="fw-semibold">{% blocktranslate %}Jami summa: {% endblocktranslate %}</span>
+                            </div>
+                            <div class="fs-4 fw-bold text-success">{{ order.total_amount|floatformat:0|intcomma }}{% blocktrans %} so'm{% endblocktrans %}</div>
+                        </div>
+                    </div>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-4">
+                                    <label for="payment_screenshot" class="form-label fw-bold">{% blocktrans %}To'lov skrini{% endblocktrans %}</label>
+                                    <input type="file" class="form-control form-control-lg" id="payment_screenshot" name="payment_screenshot" accept="image/*" required>
+                            <div class="form-text text-muted mt-1">
+                                        <i class="fas fa-info-circle me-1"></i>
+                                {% blocktrans %}To'lov skrinini yuklang (rasm formatida, masalan, PNG yoki JPG).{% endblocktrans %}
+                            </div>
+                        </div>
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-primary btn-lg rounded-3 py-3 fw-bold">
+                                <i class="fas fa-check-circle me-2"></i>
+                                {% blocktrans %}To'lovni tasdiqlash{% endblocktrans %}
+                            </button>
+                            <a href="{% url 'orders:cart_detail' %}" class="btn btn-outline-secondary btn-lg rounded-3 py-3 fw-bold">
+                                <i class="fas fa-times-circle me-2"></i>
+                                {% blocktrans %}Bekor qilish{% endblocktrans %}
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.form-control {
+    border-radius: 0.5rem;
+    border: 2px solid #e9ecef;
+    padding: 0.75rem 1rem;
+}
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+}
+.btn {
+    transition: all 0.2s ease-in-out;
+}
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.bg-light {
+    background: linear-gradient(90deg, #f8fafc 60%, #e3f2fd 100%) !important;
+}
+.bg-white {
+    background: #fff !important;
+}
+</style>
+{% endblock %} 

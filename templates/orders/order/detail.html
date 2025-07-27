@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% load i18n %}
+{% block title %}{% trans "Buyurtma" %} #{{ order.id }}{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'books:book_list' %}">{% trans "Bosh sahifa" %}</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'orders:order_history' %}">{% trans "Buyurtmalar tarixi" %}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{% trans "Buyurtma" %} #{{ order.id }}</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">{% trans "Buyurtma" %} #{{ order.id }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Sana" %}:</strong> {{ order.created_at|date:"d.m.Y H:i" }}</p>
+                            <p><strong>{% trans "Jami summa" %}:</strong> {{ order.total_amount|floatformat:0|intcomma }} {% trans "so'm" %}</p>
+                            <p><strong>{% trans "Manzil" %}:</strong> {{ order.address }}</p>
+                            <p><strong>{% trans "Mo'ljal" %}:</strong> {{ order.landmark }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Holat" %}:</strong> 
+                                {% if order.status == 'pending' %}
+                                    <span class="badge bg-warning">{% trans "Kutilmoqda" %}</span>
+                                {% elif order.status == 'awaiting_confirmation' %}
+                                    <span class="badge bg-info">{% trans "Tasdiqlanishi kutilmoqda" %}</span>
+                                {% elif order.status == 'confirmed_preparing' %}
+                                    <span class="badge bg-primary">{% trans "Tasdiqlangan, tayyorlanmoqda" %}</span>
+                                {% elif order.status == 'awaiting_delivery' %}
+                                    <span class="badge bg-secondary">{% trans "Yetkazib berilishi kutilmoqda" %}</span>
+                                {% elif order.status == 'delivered' %}
+                                    <span class="badge bg-success">{% trans "Yetkazib berilgan" %}</span>
+                                {% elif order.status == 'cancelled' %}
+                                    <span class="badge bg-danger">{% trans "Bekor qilindi" %}</span>
+                                {% endif %}
+                            </p>
+                            <p><strong>{% trans "Yangilangan sana" %}:</strong> {{ order.updated_at|date:"d.m.Y H:i" }}</p>
+                        </div>
+                    </div>
+
+                    <h4 class="mb-3">{% trans "Buyurtma elementlari" %}</h4>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>{% trans "Kitob" %}</th>
+                                    <th>{% trans "Narxi" %}</th>
+                                    <th>{% trans "Soni" %}</th>
+                                    <th>{% trans "Jami" %}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in order.items.all %}
+                                <tr>
+                                    <td>{{ item.book.title }}</td>
+                                    <td>{{ item.price|floatformat:0|intcomma }} {% trans "so'm" %}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>{{ item.price|floatformat:0|intcomma }} {% trans "so'm" %} × {{ item.quantity }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th colspan="3" class="text-end">{% trans "Jami" %}:</th>
+                                    <th>{{ order.total_amount|floatformat:0|intcomma }} {% trans "so'm" %}</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">{% trans "To'lov ma'lumotlari" %}</h4>
+                </div>
+                <div class="card-body">
+                    {% if order.card_number %}
+                        <p><strong>{% trans "Karta raqami" %}:</strong> {{ order.card_number }}</p>
+                    {% endif %}
+
+                    {% if order.payment_screenshot %}
+                        <p><strong>{% trans "To'lov skrini" %}:</strong></p>
+                        <img src="{{ order.payment_screenshot.url }}" class="img-fluid rounded" alt="{% trans "To'lov skrini" %}">
+                    {% endif %}
+
+                    {% if order.status == 'pending' %}
+                        <div class="alert alert-warning mt-3">
+                            <p>{% trans "To'lov ma'lumotlari kiritilmagan" %}.</p>
+                            <a href="{% url 'orders:payment_process' order.id %}" class="btn btn-primary mt-2">{% trans "To'lovni amalga oshirish" %}</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'orders:order_history' %}" class="btn btn-outline-secondary">
+            <i class="fas fa-arrow-left"></i> {% trans "Barcha buyurtmalarga qaytish" %}
+        </a>
+    </div>
+</div>
+{% endblock %}

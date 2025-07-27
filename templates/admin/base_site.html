@@ -1,0 +1,86 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+{% block extrahead %}
+{{ block.super }}
+<style>
+    .screenshot-modal {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.7);
+    }
+    .screenshot-modal-content {
+        position: relative;
+        background-color: #fff;
+        margin: 5% auto;
+        padding: 20px;
+        width: 80%;
+        max-width: 800px;
+        border-radius: 5px;
+    }
+    .screenshot-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    .screenshot-modal-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    .screenshot-modal-body {
+        text-align: center;
+    }
+    .screenshot-modal-body img {
+        max-width: 100%;
+        max-height: 70vh;
+    }
+</style>
+<script>
+    function showScreenshot(url) {
+        var modal = document.getElementById('screenshotModal');
+        var img = document.getElementById('screenshotImage');
+        img.src = url;
+        modal.style.display = 'block';
+        return false;
+    }
+    
+    function hideScreenshot() {
+        document.getElementById('screenshotModal').style.display = 'none';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        var modal = document.getElementById('screenshotModal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    hideScreenshot();
+                }
+            });
+        }
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                hideScreenshot();
+            }
+        });
+    });
+</script>
+<div id="screenshotModal" class="screenshot-modal">
+    <div class="screenshot-modal-content">
+        <div class="screenshot-modal-header">
+            <h5 style="margin: 0;">{% trans "To'lov skrini" %}</h5>
+            <button onclick="hideScreenshot()" class="screenshot-modal-close">&times;</button>
+        </div>
+        <div class="screenshot-modal-body">
+            <img id="screenshotImage" src="" alt="{% trans "To'lov skrini" %}">
+        </div>
+    </div>
+</div>
+{% endblock %} 

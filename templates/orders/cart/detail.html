@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block title %}{% trans "Savat" %}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{% trans "Savat" %}</h1>
+    
+    {% if cart_items %}
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% trans "Kitob" %}</th>
+                        <th>{% trans "Soni" %}</th>
+                        <th>{% trans "Narxi" %}</th>
+                        <th>{% trans "Jami" %}</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart_items %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'books:book_detail' item.book.slug %}">
+                                    {{ item.book.title }}
+                                </a>
+                            </td>
+                            <td>{{ item.quantity }}</td>
+                            <td>{{ item.book.price|floatformat:0|intcomma }} {% trans "so'm" %}</td>
+                            <td><strong>{{ item.total_price|floatformat:0|intcomma }} {% trans "so'm" %}</strong></td>
+                            <td>
+                                <form action="{% url 'orders:cart_remove' item.book.id %}" method="post" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-end"><strong>{% trans "Jami" %}:</strong></td>
+                        <td><strong>{{ total|floatformat:0|intcomma }} {% trans "so'm" %}</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'books:book_list' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> {% trans "Kitoblarga qaytish" %}
+            </a>
+            {% if user.is_authenticated %}
+                <form action="{% url 'orders:order_create' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-shopping-cart"></i> {% trans "Buyurtma berish" %}
+                    </button>
+                </form>
+            {% else %}
+                <a href="{% url 'users:login' %}?next={% url 'orders:cart_detail' %}" class="btn btn-primary">
+                    <i class="fas fa-sign-in-alt"></i> {% trans "Buyurtma berish uchun kiring" %}
+                </a>
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="text-center">
+            <p class="lead">{% trans "Savat bo'sh" %}</p>
+            <a href="{% url 'books:book_list' %}" class="btn btn-primary">
+                <i class="fas fa-arrow-left"></i> {% trans "Kitoblarga qaytish" %}
+            </a>
+        </div>
+    {% endif %}
+{% endblock %} 

@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load humanize %}
+{% load i18n %}
+{% block title %}{% trans "Buyurtma berish" %}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">{% trans "Buyurtma berish" %}</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                {{ form.address.label_tag }}
+                {{ form.address }}
+                {% for error in form.address.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.landmark.label_tag }}
+                {{ form.landmark }}
+                {% for error in form.landmark.errors %}
+                    <div class="invalid-feedback d-block">{{ error }}</div>
+                {% endfor %}
+            </div>
+            <button type="submit" class="btn btn-primary">{% trans "Buyurtma berish" %}</button>
+        </form>
+        <hr>
+        <h5>{% trans "Savat" %}</h5>
+        <ul class="list-group mb-3">
+            {% for item in cart_items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.book.title }} x {{ item.quantity }}
+                    <span>{{ item.total_price|floatformat:0|intcomma }} {% trans "so'm" %}</span>
+                </li>
+            {% endfor %}
+        </ul>
+        <div class="text-end">
+            <strong>{% trans "Jami" %}: {{ total|floatformat:0|intcomma }} {% trans "so'm" %}</strong>
+        </div>
+    </div>
+</div>
+{% endblock %} 

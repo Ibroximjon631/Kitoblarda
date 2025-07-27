@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+
+{% block title %}{% trans "Ro'yxatdan o'tish" %}{% endblock %}
+
+{% block extra_css %}
+  <!-- Leaflet CSS -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+      margin-top: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">{% trans "Ro'yxatdan o'tish" %}</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.first_name|as_crispy_field }}
+            {{ form.phone|as_crispy_field }}
+            {{ form.password1|as_crispy_field }}
+            {{ form.password2|as_crispy_field }}
+            <button type="submit" class="btn btn-primary mt-3">{% trans "Ro'yxatdan o'tish" %}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const latInput = document.getElementById("id_latitude");
+      const lngInput = document.getElementById("id_longitude");
+
+      // Agar input bo'sh bo'lsa, default qiymatlar
+      const defaultLat = parseFloat(latInput.value) || 41.2995;
+      const defaultLng = parseFloat(lngInput.value) || 69.2401;
+
+      // Xarita yaratish
+      const map = L.map("map").setView([defaultLat, defaultLng], 13);
+
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap contributors",
+      }).addTo(map);
+
+      // Dragable marker qo'yish
+      const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+      function updateCoordinates(lat, lng) {
+        latInput.value = lat;
+        lngInput.value = lng;
+      }
+
+      // Marker surilganda yangi koordinata bilan yangilash
+      marker.on("dragend", function (e) {
+        const pos = marker.getLatLng();
+        updateCoordinates(pos.lat, pos.lng);
+      });
+
+      // Xarita ustiga bosilganda markerni ko'chirish va koordinatani yangilash
+      map.on("click", function (e) {
+        marker.setLatLng(e.latlng);
+        updateCoordinates(e.latlng.lat, e.latlng.lng);
+      });
+
+      // Agar xarita konteyneri dastlab yashirin bo'lgani uchun o'lchamini yangilash
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 300);
+    });
+  </script>
+{% endblock %} 

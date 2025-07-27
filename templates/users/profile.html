@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Profil" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{% trans "Profil ma'lumotlari" %}</h5>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="id_first_name" class="form-label">{% trans "Ism" %}</label>
+                            <input type="text" class="form-control" id="id_first_name" name="first_name" value="{{ user.first_name }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_phone" class="form-label">{% trans "Telefon raqam" %}</label>
+                            <input type="tel" class="form-control" id="id_phone" name="phone" value="{{ user.phone }}" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">{% trans "Saqlash" %}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %} 
